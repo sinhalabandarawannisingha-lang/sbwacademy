@@ -11,8 +11,11 @@ const db = getFirestore(app);
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const login = async () => {
+    setLoading(true);
+
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -22,58 +25,70 @@ export default function LoginPage() {
 
       const user = userCredential.user;
 
-      // 👑 ADMIN LOGIN
-      if (user.email === "sinhalabandarawannisingha@gmail.com") {
-        alert("Admin Login Successful");
+      // ADMIN
+      if (
+        user.email?.toLowerCase() ===
+        "sinhalabandarawannisingha@gmail.com"
+      ) {
         window.location.href = "/admin";
         return;
       }
 
-      // 🎓 STUDENT CHECK
+      // STUDENT
       const studentRef = doc(db, "students", user.uid);
       const studentSnap = await getDoc(studentRef);
 
       if (!studentSnap.exists()) {
-        alert("Student Record Not Found");
+        alert("Student record not found");
         return;
       }
 
       const data = studentSnap.data();
 
       if (!data?.approved) {
-        alert("Your account is waiting for admin approval.");
+        window.location.href = "/pending";
         return;
       }
 
-      alert("Login Successful");
       window.location.href = "/dashboard";
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
       alert("Wrong Email or Password");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-700">
+      <div className="bg-white p-8 rounded-2xl shadow-2xl w-[350px]">
+        <h1 className="text-3xl font-bold text-center mb-6">
+          Student Portal
+        </h1>
 
-      <br />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full border p-3 rounded-lg mb-4"
+        />
 
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full border p-3 rounded-lg mb-4"
+        />
 
-      <br />
-
-      <button onClick={login}>Login</button>
+        <button
+          onClick={login}
+          disabled={loading}
+          className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
+        >
+          {loading ? "Logging In..." : "Login"}
+        </button>
+      </div>
     </div>
   );
 }

@@ -18,11 +18,14 @@ export default function AdminPage() {
 
       const adminEmail = "sinhalabandarawannisingha@gmail.com";
 
-      if (user.email === adminEmail) {
+      if (
+  user.email?.toLowerCase() ===
+  "sinhalabandarawannisingha@gmail.com"
+) {
         setLoading(false);
         return;
       } else {
-        window.location.href = "/student-login";
+        window.location.href = "/pending";
         return;
       }
     });
