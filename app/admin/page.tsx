@@ -1,6 +1,6 @@
 "use client";
 
-import app from "../firebase";
+import {app} from "../firebase";
 
 import {
   getAuth,
@@ -29,20 +29,19 @@ const [loading, setLoading] = useState(true);
         if (!user) {
 
           window.location.href = "/login";
+          setLoading(false);
           return;
-
         }
-       if (
-  user.email !==
-  "sinhalabandarawannisingha@gmail.com"
-) {
+    if (user && user.email === "sinhalabandarawannisingha@gmail.com")  {
   window.location.href = "/dashboard";
   return;
 }
+
+window.location.href = "/admin";
+
         setLoading(false);
 
-      }
-    );
+      });
 
     return () => unsubscribe();
 
