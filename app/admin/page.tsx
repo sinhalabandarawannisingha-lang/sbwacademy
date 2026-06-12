@@ -25,7 +25,7 @@ export default function AdminPage() {
         setLoading(false);
         return;
       } else {
-        window.location.href = "/dashbord";
+        window.location.href = "/dashboard";
         return;
       }
     });
