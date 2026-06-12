@@ -51,10 +51,11 @@ export default function LoginPage() {
       }
 
       window.location.href = "/dashboard";
-    } catch (error:any) {
-      console.log(error);
-      alert(error.message);
-    } finally {
+    }catch (error: any) {
+  console.log("ERROR CODE:", error.code);
+  console.log("ERROR MESSAGE:", error.message);
+  alert(error.code);
+}  {
       setLoading(false);
     }
   };
