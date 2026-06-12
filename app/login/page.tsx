@@ -17,15 +17,16 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential =
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
 
       const user = userCredential.user;
 
-      // ADMIN
+      // 👑 ADMIN
       if (
         user.email?.toLowerCase() ===
         "sinhalabandarawannisingha@gmail.com"
@@ -34,9 +35,15 @@ export default function LoginPage() {
         return;
       }
 
-      // STUDENT
-      const studentRef = doc(db, "students", user.uid);
-      const studentSnap = await getDoc(studentRef);
+      // 🎓 STUDENT
+      const studentRef = doc(
+        db,
+        "students",
+        user.uid
+      );
+
+      const studentSnap =
+        await getDoc(studentRef);
 
       if (!studentSnap.exists()) {
         alert("Student record not found");
@@ -51,11 +58,11 @@ export default function LoginPage() {
       }
 
       window.location.href = "/dashboard";
-    }catch (error: any) {
-  console.log("ERROR CODE:", error.code);
-  console.log("ERROR MESSAGE:", error.message);
-  alert(error.code);
-}  {
+
+    } catch (error) {
+      console.log(error);
+      alert("Wrong Email or Password");
+    } finally {
       setLoading(false);
     }
   };
@@ -71,7 +78,9 @@ export default function LoginPage() {
           type="email"
           placeholder="Email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
           className="w-full border p-3 rounded-lg mb-4"
         />
 
@@ -79,7 +88,9 @@ export default function LoginPage() {
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
           className="w-full border p-3 rounded-lg mb-4"
         />
 
@@ -88,7 +99,9 @@ export default function LoginPage() {
           disabled={loading}
           className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
         >
-          {loading ? "Logging In..." : "Login"}
+          {loading
+            ? "Logging In..."
+            : "Login"}
         </button>
       </div>
     </div>
