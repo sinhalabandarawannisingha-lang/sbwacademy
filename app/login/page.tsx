@@ -51,8 +51,9 @@ export default function LoginPage() {
       }
 
       window.location.href = "/dashboard";
-    } catch (error) {
-      alert("Wrong Email or Password");
+    } catch (error:any) {
+      console.log(error);
+      alert(error.message);
     } finally {
       setLoading(false);
     }
