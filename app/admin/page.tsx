@@ -25,7 +25,7 @@ export default function AdminPage() {
         setLoading(false);
         return;
       } else {
-        window.location.href = "/pending";
+        window.location.href = "/dashbord";
         return;
       }
     });
@@ -42,7 +42,7 @@ export default function AdminPage() {
   }
   
   return (
-    <main className="min-h-screen flex bg-[#081120] text-white">
+    <main className="min-h-screen flex bg-[#081120] text-black">
       {/* SIDEBAR */}
       <div className="w-72 bg-[#0f1b33] p-6 flex flex-col justify-between">
         <div>
