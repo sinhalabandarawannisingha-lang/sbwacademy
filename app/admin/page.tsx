@@ -32,17 +32,13 @@ const [loading, setLoading] = useState(true);
           return;
 
         }
-
-        if (
-          user.email !==
-          "sinhalabandarawannisingha@gmail.com"
-        ) {
-
-          window.location.href = "/dashboard";
-          return;
-
-        }
-
+       if (
+  user.email !==
+  "sinhalabandarawannisingha@gmail.com"
+) {
+  window.location.href = "/dashboard";
+  return;
+}
         setLoading(false);
 
       }
